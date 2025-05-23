@@ -1,0 +1,186 @@
+// xorniscommands.lox | made by terlexory
+
+while (!_G.xornis) {
+	wait();
+}
+
+var xornis = _G.xornis;
+
+xornis.commands = {}
+
+while (!xornis.globals) {
+	wait();
+}
+
+while (!xornis.configuration) {
+	wait();
+}
+
+var globals = xornis.globals;
+var commands = xornis.commands;
+var configuration = xornis.configuration;
+
+// DOCUMENTED
+//commands.examplecommand = { // commands['commandnamehere'] = { (DO NOT MAKE ANY LETTER CAPTALIZED!!!)
+	//prefix = '!', // prefix which the command uses
+	//args = {}, // arguments which the command uses
+	//description = 'an example command it literally does nothing except gives u a notification', // the description of the command
+	//adminLevel = 0, // levels are: 0/nil - players+, 1 - helper+, 2 - mod+, 3 - admin+, 4 - coowner+, 5 - owner. rank names are: 'Players', 'Helper', 'Mod', 'Admin', 'Coowner', 'Owner'
+	//argumentsOptional = true, // if true then it wont block the command from running when there are insufficent arguments given
+			
+	//callback = function(player, args) { // gets called when someone runs the command
+		// example code	
+		
+		//Announce('hi guys i play minecraft and stuff, my favourite show is better call saul', player);		
+	//}
+//}
+
+// UNDOCUMENTED
+//commands.examplecommand = {
+	//prefix = '!',
+	//args = {},
+	//description = 'an example command it literally does nothing except gives u a notification',
+	//adminLevel = 0,
+	//argumentsOptional = true,
+			
+	//callback = function(player, args) {
+		//Announce('hi guys i play minecraft and stuff, my favourite show is better call saul', player);		
+	//}
+//}
+
+commands.quit = {
+	prefix = '!',
+	args = {},
+	description = 'Quits to menu',
+	adminLevel = 0,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		Kick(player, 'Ran command: quit');
+	}
+}
+
+commands.invite = {
+	prefix = '!',
+	args = {},
+	description = 'Sends the GG invite (13+)',
+	adminLevel = 0,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		AnnounceRestricted(configuration.inviteCode, player);
+	}
+}
+
+commands.kick = {
+	prefix = '!',
+	args = {'player', 'reason'},
+	description = `Kicks player(s)`,
+	adminLevel = 2,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		var players = getPlayers(player, args[1]);
+		for _,plr in players {
+			Kick(plr, args[2]);
+		}
+	}
+}
+
+commands.kill = {
+	prefix = '!',
+	args = {'player'},
+	description = `Kills player(s)`,
+	adminLevel = 2,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			Kill(plr, 'get dunked on');		
+		}
+	}
+}
+
+commands.explode = {
+	prefix = '!',
+	args = {'player'},
+	description = 'We do a little bit of trolling',
+	adminLevel = 2,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			Explode(plr.Position, 100000000, 1, nil, 'get dunked on');
+		}
+	}
+}
+
+commands.forceclass = {
+	prefix = '!',
+	args = {'player', 'class'},
+	description = 'Forceclass player(s)',
+	adminLevel = 2,
+	argumentsOptional = false,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetClass(plr, args[2]);		
+		}
+	}
+}
+
+commands.help = {
+	prefix = '!',
+	args = {'command'},
+	description = 'Shows a list of commands',
+	adminLevel = 0,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		if (args[1]) {
+			var cmdTable = commands[args[1]];
+			
+			Announce(`{cmdTable.prefix}{args[1]} - {cmdTable.description}`, player);
+			
+			wait(0.5);
+						
+			var message = `Usage: {cmdTable.prefix}{args[1]}`
+		
+			for (var i = 1; i <= #cmdTable.args; i = i + 1) {
+				message = message + ` [{cmdTable.args[i]}]`
+			}	
+			
+			Announce(message, player);		
+			return;
+		}
+		
+		var message = '';
+			
+		for cmdName,cmdTable in commands {
+			if (cmdName == '__loaded') { continue }
+				
+			Announce(`{cmdTable.prefix}{cmdName} - {cmdTable.description}`, player);
+			
+			wait(0.5);
+						
+			var message = `Usage: {cmdTable.prefix}{cmdName}`
+		
+			for (var i = 1; i <= #cmdTable.args; i = i + 1) {
+				message = message + ` [{cmdTable.args[i]}]`
+			}	
+			
+			Announce(message, player);
+						
+			wait(1.5);			
+		}
+	}
+}
+
+commands.__loaded = true;
+
+if (configuration.verbose) {
+	print 'XornisCommands loaded!';
+}
