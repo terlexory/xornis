@@ -1,0 +1,81 @@
+// xornisglobals.lox | made by terlexory
+
+while (!_G.xornis) {
+	wait();
+}
+
+var xornis = _G.xornis;
+
+while (!xornis.configuration) {
+	wait();
+}
+
+var configuration = xornis.configuration;
+
+xornis.globals = {}
+
+var globals = xornis.globals;
+
+globals.isRankOrAbove = function(player, rank) {
+	var ranks = {
+		['Players'] = 0,	
+		['Helper'] = 1,
+		['Mod'] = 2,
+		['Admin'] = 3,
+		['Coowner'] = 4,		
+		['Owner'] = 5,
+	}
+	
+	var playerRank = player.Rank;	
+	var rankLevel = ranks[playerRank];
+	
+	if (rankLevel == nil) {
+		rankLevel = 0;
+	}
+	
+	if (typeof(rank) == 'string') {
+		rank = ranks[rank];
+	}
+	
+	if (rankLevel >= rank or rank == nil) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+globals.getPlayers = function(player, text) {
+	if (text == 'all') {
+		return GetPlayers();	
+	} elseif (text == 'others') {
+		var players = {}	
+		
+		for _,plr in GetPlayers() {
+			if (plr.Name == player.Name) { continue }
+			table.insert(players, plr);		
+		}
+		
+		return players;
+	} elseif (text == 'me' or !text) {
+		return {player};
+	} else {
+		var players = {}
+		var split = strsplit(text, ',')			
+			
+		for _,plr in GetPlayers() {
+			for _,name in split {
+				if (sub(lower(plr.Name), 1, #name) == lower(name)) {
+					table.insert(players, plr);	
+				}
+			}
+		}
+		
+		return players;
+	}
+}
+
+globals.__loaded = true;
+
+if (configuration.verbose) {
+	print 'XornisGlobals loaded!';
+}
