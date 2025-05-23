@@ -1,0 +1,18 @@
+// xornissettings.lox | made by terlexory
+
+while (!_G.xornis) {
+	wait();
+}
+
+var xornis = _G.xornis;
+
+xornis.configuration = {
+	inviteCode = '[CODE HERE]'
+	verbose = true;
+}
+
+xornis.configuration.__loaded = true;
+
+if (xornis.configuration.verbose) {
+	print 'XornisConfiguration loaded!';
+}
