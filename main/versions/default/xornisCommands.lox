@@ -21,7 +21,7 @@ var commands = xornis.commands;
 var configuration = xornis.configuration;
 
 // DOCUMENTED
-//commands.examplecommand = { // commands['commandnamehere'] = { (DO NOT MAKE ANY LETTER CAPTALIZED!!!)
+//commands.examplecommand = { // commands.commandnamehere = { (DO NOT MAKE ANY LETTER CAPTALIZED!!!)
 	//prefix = '!', // prefix which the command uses
 	//args = {}, // arguments which the command uses
 	//description = 'an example command it literally does nothing except gives u a notification', // the description of the command
@@ -113,6 +113,76 @@ commands.explode = {
 		var players = globals.getPlayers(player, args[1]);
 		for _,plr in players {
 			Explode(plr.Position, 100000000, 1, nil, 'get dunked on');
+		}
+	}
+}
+
+commands.csay = {
+	prefix = '!',
+	args = {'player', 'message'},
+	description = 'Sends a chat message to player(s)',
+	adminLevel = 2,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SendChatMessage(args[2], plr);
+		}
+	}
+}
+
+commands.asay = {
+	prefix = '!',
+	args = {'player', 'message'},
+	description = 'Sends an announcement to player(s)',
+	adminLevel = 2,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			Announce(args[2], plr);
+		}
+	}
+}
+
+commands.giveitem = {
+	prefix = '!',
+	args = {'player', 'item'},
+	description = 'Give player(s) item(s)',
+	adminLevel = 2,
+	argumentsOptional = false,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			var items = strsplit(args[2], ',');
+			
+			for _,item in items {
+				GiveItem(plr,item);
+			}
+		}
+	}
+}
+
+commands.removeitem = {
+	prefix = '!',
+	args = {'player', 'item'},
+	description = 'Remove player(s) item(s)',
+	adminLevel = 2,
+	argumentsOptional = false,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			var items = strsplit(args[2], ',');
+			
+			for _,item in items {
+				if (HasItem(plr,item)) {
+					RemoveItem(plr,item);
+				}	
+			}
 		}
 	}
 }
