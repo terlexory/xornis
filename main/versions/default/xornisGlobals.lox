@@ -56,7 +56,7 @@ globals.getPlayers = function(player, text) {
 		}
 		
 		return players;
-	} elseif (text == 'me' or !text) {
+	} elseif (!text) {
 		return {player};
 	} else {
 		var players = {}
@@ -64,8 +64,10 @@ globals.getPlayers = function(player, text) {
 			
 		for _,plr in GetPlayers() {
 			for _,name in split {
-				if (sub(lower(plr.Name), 1, #name) == lower(name)) {
-					table.insert(players, plr);	
+				if (name == 'me') {
+					table.insert(players, player);
+				} elseif (sub(lower(plr.Name), 1, #name) == lower(name)) {
+					table.insert(players, plr);
 				}
 			}
 		}
