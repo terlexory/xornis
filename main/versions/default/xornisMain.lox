@@ -3,7 +3,7 @@
 _G.xornis = {}
 
 var xornis = _G.xornis;
-xornis.version = 3;
+xornis.version = 4;
 
 while (!xornis.globals) {
 	wait();
@@ -13,12 +13,17 @@ while (!xornis.commands) {
 	wait();
 }
 
+while (!xornis.customCommands) {
+	wait();
+}
+
 while (!xornis.configuration) {
 	wait();
 }
 
 var globals = xornis.globals;
 var commands = xornis.commands;
+var customCommands = xornis.customCommands;
 var configuration = xornis.configuration;
 
 xornis.processMessageCommand = function(player, msg) {
@@ -33,7 +38,7 @@ xornis.processMessageCommand = function(player, msg) {
 	msg = gsub(msg, prefix, '');
 	
 	var cmd = lower(strsplit(msg, ' ')[1]);
-	var cmdTable = commands[cmd];
+	var cmdTable = commands[cmd] or customCommands[cmd];
 	
 	msg = gsub(msg, cmd, '');
 	msg = sub(msg, 2);
@@ -91,6 +96,10 @@ while (!globals.__loaded) {
 }
 
 while (!commands.__loaded) {
+	wait();
+}
+
+while (!customCommands.__loaded) {
 	wait();
 }
 
