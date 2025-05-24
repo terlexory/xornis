@@ -16,9 +16,14 @@ while (!xornis.configuration) {
 	wait();
 }
 
+while (!xornis.customCommands) {
+	wait();
+}
+
 var globals = xornis.globals;
 var commands = xornis.commands;
 var configuration = xornis.configuration;
+var customCommands = xornis.customCommands;
 
 // DOCUMENTED
 //commands.examplecommand = { // commands.commandnamehere = { (DO NOT MAKE ANY LETTER CAPTALIZED!!!)
@@ -80,7 +85,7 @@ commands.kick = {
 	prefix = '!',
 	args = {'player', 'reason'},
 	description = `Kicks player(s)`,
-	adminLevel = 2,
+	adminLevel = 1,
 	argumentsOptional = true,
 			
 	callback = function(player, args) {
@@ -329,7 +334,7 @@ commands.refresh = {
 	prefix = '!',
 	args = {'player'},
 	description = `Refresh player(s)`,
-	adminLevel = 2,
+	adminLevel = 1,
 	argumentsOptional = true,
 			
 	callback = function(player, args) {
@@ -344,7 +349,7 @@ commands.re = {
 	prefix = '!',
 	args = {'player'},
 	description = `Refresh player(s)`,
-	adminLevel = 2,
+	adminLevel = 1,
 	argumentsOptional = true,
 	alias = true,	
 			
@@ -360,7 +365,7 @@ commands.respawn = {
 	prefix = '!',
 	args = {'player'},
 	description = `Respawn player(s)`,
-	adminLevel = 2,
+	adminLevel = 1,
 	argumentsOptional = true,
 			
 	callback = function(player, args) {
@@ -375,7 +380,7 @@ commands.res = {
 	prefix = '!',
 	args = {'player'},
 	description = `Respawn player(s)`,
-	adminLevel = 2,
+	adminLevel = 1,
 	argumentsOptional = true,
 	alias = true,	
 			
@@ -391,7 +396,7 @@ commands.overwatch = {
 	prefix = '!',
 	args = {'player'},
 	description = `Set player(s) to overwatch`,
-	adminLevel = 2,
+	adminLevel = 1,
 	argumentsOptional = true,
 			
 	callback = function(player, args) {
@@ -406,7 +411,7 @@ commands.unoverwatch = {
 	prefix = '!',
 	args = {'player'},
 	description = `Un-set player(s) to overwatch`,
-	adminLevel = 2,
+	adminLevel = 1,
 	argumentsOptional = true,
 			
 	callback = function(player, args) {
@@ -451,7 +456,7 @@ commands.mute = {
 	prefix = '!',
 	args = {'player'},
 	description = `Mute player(s)`,
-	adminLevel = 2,
+	adminLevel = 1,
 	argumentsOptional = true,
 			
 	callback = function(player, args) {
@@ -466,7 +471,7 @@ commands.unmute = {
 	prefix = '!',
 	args = {'player'},
 	description = `Unmute player(s)`,
-	adminLevel = 2,
+	adminLevel = 1,
 	argumentsOptional = true,
 			
 	callback = function(player, args) {
@@ -481,7 +486,7 @@ commands.invisible = {
 	prefix = '!',
 	args = {'player'},
 	description = `Sets player(s) invisible`,
-	adminLevel = 2,
+	adminLevel = 1,
 	argumentsOptional = true,
 			
 	callback = function(player, args) {
@@ -496,7 +501,7 @@ commands.invis = {
 	prefix = '!',
 	args = {'player'},
 	description = `Sets player(s) invisible`,
-	adminLevel = 2,
+	adminLevel = 1,
 	argumentsOptional = true,
 	alias = true,	
 			
@@ -512,7 +517,7 @@ commands.visible = {
 	prefix = '!',
 	args = {'player'},
 	description = `Sets player(s) visible`,
-	adminLevel = 2,
+	adminLevel = 1,
 	argumentsOptional = true,
 			
 	callback = function(player, args) {
@@ -527,7 +532,7 @@ commands.vis = {
 	prefix = '!',
 	args = {'player'},
 	description = `Sets player(s) visible`,
-	adminLevel = 2,
+	adminLevel = 1,
 	argumentsOptional = true,
 	alias = true,	
 			
@@ -543,7 +548,7 @@ commands.teleport = {
 	prefix = '!',
 	args = {'player1', 'player2'},
 	description = `Teleport player(s) to other player(s)`,
-	adminLevel = 2,
+	adminLevel = 1,
 	argumentsOptional = false,
 			
 	callback = function(player, args) {
@@ -561,7 +566,7 @@ commands.goto = {
 	prefix = '!',
 	args = {'player'},
 	description = `Goto a player`,
-	adminLevel = 2,
+	adminLevel = 1,
 	argumentsOptional = true,
 			
 	callback = function(player, args) {
@@ -577,7 +582,7 @@ commands.bring = {
 	prefix = '!',
 	args = {'player'},
 	description = `Bring player(s)`,
-	adminLevel = 2,
+	adminLevel = 1,
 	argumentsOptional = true,
 			
 	callback = function(player, args) {
@@ -637,7 +642,7 @@ commands.asay = {
 	prefix = '!',
 	args = {'player', 'message'},
 	description = 'Sends an announcement to player(s)',
-	adminLevel = 2,
+	adminLevel = 1,
 	argumentsOptional = true,
 			
 	callback = function(player, args) {
@@ -692,7 +697,7 @@ commands.forceclass = {
 	prefix = '!',
 	args = {'player', 'class'},
 	description = 'Forceclass player(s)',
-	adminLevel = 2,
+	adminLevel = 1,
 	argumentsOptional = false,
 			
 	callback = function(player, args) {
@@ -726,9 +731,11 @@ commands.help = {
 			
 			Announce(message, player);		
 			return;
-		}
+		}	
+	
+		Announce(`Listing default commands...`, player);
 		
-		var message = '';
+		wait(0.5);			
 			
 		for cmdName,cmdTable in commands {
 			if (cmdName == '__loaded') { continue }
@@ -746,8 +753,33 @@ commands.help = {
 			
 			Announce(message, player);
 						
+			wait(1.5);
+		}
+		
+		Announce(`Listing custom commands...`, player);
+		
+		wait(0.5);
+		
+		for cmdName,cmdTable in customCommands {
+			if (cmdName == '__loaded') { continue }
+			if (cmdTable['alias']) { continue }			
+				
+			Announce(`{cmdTable.prefix}{cmdName} - {cmdTable.description}`, player);
+			
+			wait(0.5);
+						
+			var message = `Usage: {cmdTable.prefix}{cmdName}`
+		
+			for (var i = 1; i <= #cmdTable.args; i = i + 1) {
+				message = message + ` [{cmdTable.args[i]}]`
+			}	
+			
+			Announce(message, player);
+						
 			wait(1.5);			
 		}
+
+		Announce(`Finished listing`, player);
 	}
 }
 
