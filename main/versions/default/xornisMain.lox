@@ -3,7 +3,7 @@
 _G.xornis = {}
 
 var xornis = _G.xornis;
-xornis.version = 1;
+xornis.version = 2;
 
 while (!xornis.globals) {
 	wait();
