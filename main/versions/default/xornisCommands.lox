@@ -151,6 +151,21 @@ commands.clip = {
 	}
 }
 
+commands.maxhealth = {
+	prefix = '!',
+	args = {'player', 'hp'},
+	description = `Sets player(s) max health`,
+	adminLevel = 2,
+	argumentsOptional = false,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetMaxHealth(plr, args[2]);
+		}
+	}
+}
+
 commands.health = {
 	prefix = '!',
 	args = {'player', 'hp'},
@@ -325,12 +340,44 @@ commands.refresh = {
 	}
 }
 
+commands.re = {
+	prefix = '!',
+	args = {'player'},
+	description = `Refresh player(s)`,
+	adminLevel = 2,
+	argumentsOptional = true,
+	alias = true,	
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			ConvertToClass(plr, plr.Class, true, true);
+		}
+	}
+}
+
 commands.respawn = {
 	prefix = '!',
 	args = {'player'},
 	description = `Respawn player(s)`,
 	adminLevel = 2,
 	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetClass(plr, plr.Class);
+		}
+	}
+}
+
+commands.res = {
+	prefix = '!',
+	args = {'player'},
+	description = `Respawn player(s)`,
+	adminLevel = 2,
+	argumentsOptional = true,
+	alias = true,	
 			
 	callback = function(player, args) {
 		var players = globals.getPlayers(player, args[1]);
@@ -426,6 +473,68 @@ commands.unmute = {
 		var players = globals.getPlayers(player, args[1]);
 		for _,plr in players {
 			SetMuted(plr, false);
+		}
+	}
+}
+
+commands.invisible = {
+	prefix = '!',
+	args = {'player'},
+	description = `Sets player(s) invisible`,
+	adminLevel = 2,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetPlayerTransparency(plr, 1);
+		}
+	}
+}
+
+commands.invis = {
+	prefix = '!',
+	args = {'player'},
+	description = `Sets player(s) invisible`,
+	adminLevel = 2,
+	argumentsOptional = true,
+	alias = true,	
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetPlayerTransparency(plr, 1);
+		}
+	}
+}
+
+commands.visible = {
+	prefix = '!',
+	args = {'player'},
+	description = `Sets player(s) visible`,
+	adminLevel = 2,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetPlayerTransparency(plr, 0);
+		}
+	}
+}
+
+commands.vis = {
+	prefix = '!',
+	args = {'player'},
+	description = `Sets player(s) visible`,
+	adminLevel = 2,
+	argumentsOptional = true,
+	alias = true,	
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetPlayerTransparency(plr, 0);
 		}
 	}
 }
@@ -623,6 +732,7 @@ commands.help = {
 			
 		for cmdName,cmdTable in commands {
 			if (cmdName == '__loaded') { continue }
+			if (cmdTable['alias']) { continue }			
 				
 			Announce(`{cmdTable.prefix}{cmdName} - {cmdTable.description}`, player);
 			
