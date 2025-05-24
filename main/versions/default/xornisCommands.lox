@@ -68,6 +68,10 @@ commands.invite = {
 	argumentsOptional = true,
 			
 	callback = function(player, args) {
+		if (configuration.inviteCode == '[CODE HERE]' or configuration.inviteCode == nil or configuration.inviteCode == '') {
+			AnnounceRestricted('Not set up or disabled.', player);	
+			return;
+		}		
 		AnnounceRestricted(configuration.inviteCode, player);
 	}
 }
@@ -80,9 +84,198 @@ commands.kick = {
 	argumentsOptional = true,
 			
 	callback = function(player, args) {
-		var players = getPlayers(player, args[1]);
+		var players = globals.getPlayers(player, args[1]);
 		for _,plr in players {
 			Kick(plr, args[2]);
+		}
+	}
+}
+
+commands.god = {
+	prefix = '!',
+	args = {'player'},
+	description = `Gods player(s)`,
+	adminLevel = 2,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetGodmode(plr, true);
+		}
+	}
+}
+
+commands.ungod = {
+	prefix = '!',
+	args = {'player'},
+	description = `Ungods player(s)`,
+	adminLevel = 2,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetGodmode(plr, false);
+		}
+	}
+}
+
+commands.noclip = {
+	prefix = '!',
+	args = {'player'},
+	description = `Noclips player(s)`,
+	adminLevel = 2,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetNoclip(plr, true);
+		}
+	}
+}
+
+commands.clip = {
+	prefix = '!',
+	args = {'player'},
+	description = `Un-noclips player(s)`,
+	adminLevel = 2,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetNoclip(plr, false);
+		}
+	}
+}
+
+commands.health = {
+	prefix = '!',
+	args = {'player', 'hp'},
+	description = `Sets player(s) health`,
+	adminLevel = 2,
+	argumentsOptional = false,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetHealth(plr, args[2]);
+		}
+	}
+}
+
+commands.heal = {
+	prefix = '!',
+	args = {'player'},
+	description = `Heal player(s)`,
+	adminLevel = 2,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetHealth(plr, plr.MaxHealth);
+		}
+	}
+}
+
+commands.damage = {
+	prefix = '!',
+	args = {'player', 'hp'},
+	description = `Damage player(s)`,
+	adminLevel = 2,
+	argumentsOptional = false,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			TakeDamage(plr, args[2], 'get dunked on');
+		}
+	}
+}
+
+commands.armor = {
+	prefix = '!',
+	args = {'player', 'armor', 'max'},
+	description = `Set player(s) armor`,
+	adminLevel = 2,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		if (!args[2]) {
+			Announce('2nd argument is required', player);		
+			return;
+		}
+		
+		if (!args[3]) {
+			args[3] = args[2];
+		}
+
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetArmor(plr, args[2], args[3]);
+		}
+	}
+}
+
+commands.immunity = {
+	prefix = '!',
+	args = {'player', 'immunity'},
+	description = `Set player(s) immunity`,
+	adminLevel = 2,
+	argumentsOptional = false,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetImmunity(plr, args[2]);
+		}
+	}
+}
+
+commands.speed = {
+	prefix = '!',
+	args = {'player', 'speed'},
+	description = `Set player(s) speed`,
+	adminLevel = 2,
+	argumentsOptional = false,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetSpeed(plr, args[2]);
+		}
+	}
+}
+
+commands.jumpforce = {
+	prefix = '!',
+	args = {'player', 'jumpforce'},
+	description = `Set player(s) jump force`,
+	adminLevel = 2,
+	argumentsOptional = false,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetJump(plr, args[2]);
+		}
+	}
+}
+
+commands.infection = {
+	prefix = '!',
+	args = {'player', 'infection'},
+	description = `Set player(s) infection`,
+	adminLevel = 2,
+	argumentsOptional = false,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetInfection(plr, args[2]);
 		}
 	}
 }
@@ -113,6 +306,205 @@ commands.explode = {
 		var players = globals.getPlayers(player, args[1]);
 		for _,plr in players {
 			Explode(plr.Position, 100000000, 1, nil, 'get dunked on');
+		}
+	}
+}
+
+commands.refresh = {
+	prefix = '!',
+	args = {'player'},
+	description = `Refresh player(s)`,
+	adminLevel = 2,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			ConvertToClass(plr, plr.Class, true, true);
+		}
+	}
+}
+
+commands.respawn = {
+	prefix = '!',
+	args = {'player'},
+	description = `Respawn player(s)`,
+	adminLevel = 2,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetClass(plr, plr.Class);
+		}
+	}
+}
+
+commands.overwatch = {
+	prefix = '!',
+	args = {'player'},
+	description = `Set player(s) to overwatch`,
+	adminLevel = 2,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetOverwatch(plr, true);
+		}
+	}
+}
+
+commands.unoverwatch = {
+	prefix = '!',
+	args = {'player'},
+	description = `Un-set player(s) to overwatch`,
+	adminLevel = 2,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetOverwatch(plr, false);
+		}
+	}
+}
+
+commands.bypass = {
+	prefix = '!',
+	args = {'player'},
+	description = `Give player(s) bypass`,
+	adminLevel = 2,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetBypass(plr, true);
+		}
+	}
+}
+
+commands.unbypass = {
+	prefix = '!',
+	args = {'player'},
+	description = `Remove player(s) bypass`,
+	adminLevel = 2,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetBypass(plr, false);
+		}
+	}
+}
+
+commands.mute = {
+	prefix = '!',
+	args = {'player'},
+	description = `Mute player(s)`,
+	adminLevel = 2,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetMuted(plr, true);
+		}
+	}
+}
+
+commands.unmute = {
+	prefix = '!',
+	args = {'player'},
+	description = `Unmute player(s)`,
+	adminLevel = 2,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetMuted(plr, false);
+		}
+	}
+}
+
+commands.teleport = {
+	prefix = '!',
+	args = {'player1', 'player2'},
+	description = `Teleport player(s) to other player(s)`,
+	adminLevel = 2,
+	argumentsOptional = false,
+			
+	callback = function(player, args) {
+		var players1 = globals.getPlayers(player, args[1]);
+		for _,plr1 in players1 {
+			var players2 = globals.getPlayers(player, args[2]);		
+			for _,plr2 in players2 {
+				Teleport(plr1, plr2.Position);
+			}
+		}
+	}
+}
+
+commands.goto = {
+	prefix = '!',
+	args = {'player'},
+	description = `Goto a player`,
+	adminLevel = 2,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			Teleport(player, plr.Position);
+			break;	
+		}
+	}
+}
+
+commands.bring = {
+	prefix = '!',
+	args = {'player'},
+	description = `Bring player(s)`,
+	adminLevel = 2,
+	argumentsOptional = true,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			Teleport(plr, player.Position);		
+		}
+	}
+}
+
+commands.shirt = {
+	prefix = '!',
+	args = {'player', 'id'},
+	description = `Set player(s) shirt`,
+	adminLevel = 2,
+	argumentsOptional = false,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetShirt(plr, args[2]);		
+		}
+	}
+}
+
+commands.pants = {
+	prefix = '!',
+	args = {'player', 'id'},
+	description = `Set player(s) pants`,
+	adminLevel = 2,
+	argumentsOptional = false,
+			
+	callback = function(player, args) {
+		var players = globals.getPlayers(player, args[1]);
+		for _,plr in players {
+			SetPants(plr, args[2]);		
 		}
 	}
 }
