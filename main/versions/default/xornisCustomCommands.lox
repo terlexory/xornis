@@ -1,0 +1,61 @@
+// xorniscustomcommands.lox | made by terlexory
+
+while (!_G.xornis) {
+	wait();
+}
+
+var xornis = _G.xornis;
+
+while (!xornis.commands) {
+	wait();
+}
+
+while (!xornis.globals) {
+	wait();
+}
+
+while (!xornis.configuration) {
+	wait();
+}
+
+var globals = xornis.globals;
+var configuration = xornis.configuration;
+var commands = xornis.commands;
+
+_G.xornis.customCommands = {}
+
+var customCommands = xornis.customCommands;
+
+// DOCUMENTED
+//customCommands.examplecommand = { // customCommands.commandnamehere = { (DO NOT MAKE ANY LETTER CAPTALIZED!!!)
+	//prefix = '!', // prefix which the command uses
+	//args = {}, // arguments which the command uses
+	//description = 'an example command it literally does nothing except gives u a notification', // the description of the command
+	//adminLevel = 0, // levels are: 0/nil - players+, 1 - helper+, 2 - mod+, 3 - admin+, 4 - coowner+, 5 - owner. rank names are: 'Players', 'Helper', 'Mod', 'Admin', 'Coowner', 'Owner'
+	//argumentsOptional = true, // if true then it wont block the command from running when there are insufficent arguments given
+			
+	//callback = function(player, args) { // gets called when someone runs the command
+		// example code	
+		
+		//Announce('hi guys i play minecraft and stuff, my favourite show is better call saul', player);		
+	//}
+//}
+
+// UNDOCUMENTED
+//customCommands.examplecommand = {
+	//prefix = '!',
+	//args = {},
+	//description = 'an example command it literally does nothing except gives u a notification',
+	//adminLevel = 0,
+	//argumentsOptional = true,
+			
+	//callback = function(player, args) {
+		//Announce('hi guys i play minecraft and stuff, my favourite show is better call saul', player);		
+	//}
+//}
+
+customCommands.__loaded = true;
+
+if (configuration.verbose) {
+	print 'XornisCustomCommands loaded!';
+	}
