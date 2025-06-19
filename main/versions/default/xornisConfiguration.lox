@@ -1,18 +1,23 @@
-// xornissettings.lox | made by terlexory
+// xornisconfiguration.lox | made by terlexory
 
+// || @ yielding until table has been created
 while (!_G.xornis) {
 	wait();
 }
 
+// || @ xornis var
 var xornis = _G.xornis;
 
+// || @ xornis config
 xornis.configuration = {
-	inviteCode = '[CODE HERE]'
-	verbose = true;
+	inviteCode = '[CODE HERE]',
+	verbose = true
 }
 
+// || @ setting the __loaded boolean to true
 xornis.configuration.__loaded = true;
 
+// || @ if verbose is enabled then printing
 if (xornis.configuration.verbose) {
 	print 'XornisConfiguration loaded!';
 }
