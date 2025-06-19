@@ -1,11 +1,14 @@
 // xorniscustomcommands.lox | made by terlexory
 
+// || @ yielding until table has been created
 while (!_G.xornis) {
 	wait();
 }
 
+// || @ xornis var
 var xornis = _G.xornis;
 
+// || @ yielding until table elements have been created
 while (!xornis.commands) {
 	wait();
 }
@@ -18,12 +21,15 @@ while (!xornis.configuration) {
 	wait();
 }
 
+// || @ vars
 var globals = xornis.globals;
 var configuration = xornis.configuration;
 var commands = xornis.commands;
 
+// || @ creating table element
 _G.xornis.customCommands = {}
 
+// || @ custom commands var
 var customCommands = xornis.customCommands;
 
 // DOCUMENTED
@@ -54,8 +60,10 @@ var customCommands = xornis.customCommands;
 	//}
 //}
 
+// || @ setting the __loaded boolean to true
 customCommands.__loaded = true;
 
+// || @ if verbose enabled then printing
 if (configuration.verbose) {
 	print 'XornisCustomCommands loaded!';
-	}
+}
