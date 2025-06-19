@@ -11,6 +11,7 @@ var xornis = _G.xornis;
 // || @ xornis config
 xornis.configuration = {
 	inviteCode = '[CODE HERE]',
+	defaultPrefix = ':'
 	verbose = true
 }
 
