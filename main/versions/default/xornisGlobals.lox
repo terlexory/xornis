@@ -1,22 +1,30 @@
 // xornisglobals.lox | made by terlexory
 
+// || @ yielding until table has been created
 while (!_G.xornis) {
 	wait();
 }
 
+// || @ xornis var
 var xornis = _G.xornis;
 
+// || @ yielding until table element has been created
 while (!xornis.configuration) {
 	wait();
 }
 
+// || @ configuration var
 var configuration = xornis.configuration;
 
+// || @ creating globals element
 xornis.globals = {}
 
+// || @ globals var
 var globals = xornis.globals;
 
-globals.isRankOrAbove = function(player, rank) {
+// || @ global functions
+globals.isRankOrAbove = function(player, rank) { // || @ checks if the players rank exceeds the rank parameter specified
+	// || @ ranks that are equal to a certain admin level
 	var ranks = {
 		['Players'] = 0,	
 		['Helper'] = 1,
@@ -26,17 +34,21 @@ globals.isRankOrAbove = function(player, rank) {
 		['Owner'] = 5,
 	}
 	
+	// || @ getting the player ranks and the rank level	
 	var playerRank = player.Rank;	
 	var rankLevel = ranks[playerRank];
 	
+	// || @ if ranklevel is nil then ranklevel will be 0	
 	if (rankLevel == nil) {
 		rankLevel = 0;
 	}
 	
+	// || @ if the type of the rank is a string then rank will be set as an adminlevel	
 	if (typeof(rank) == 'string') {
 		rank = ranks[rank];
 	}
 	
+	// || @ checking if the ranklevel of the player is above or equal to the specificed rank else return false	
 	if (rankLevel >= rank or rank == nil) {
 		return true;
 	} else {
@@ -44,10 +56,13 @@ globals.isRankOrAbove = function(player, rank) {
 	}
 }
 
-globals.getPlayers = function(player, text) {
+globals.getPlayers = function(player, text) { // || @ returns players depending on the text parameter
+	// || @ huge ass if statement lmao
 	if (text == 'all') {
+		// || @ return all the players if text is equal to all
 		return GetPlayers();	
 	} elseif (text == 'others') {
+		// || @ return all players except for the player specified in the first parameter
 		var players = {}	
 		
 		for _,plr in GetPlayers() {
@@ -57,8 +72,10 @@ globals.getPlayers = function(player, text) {
 		
 		return players;
 	} elseif (!text) {
+		// || @ return the player itself in a table if text is equal to false or nil	
 		return {player};
 	} else {
+		// || @ return players that were named in the text paramater	
 		var players = {}
 		var split = strsplit(text, ',')			
 			
@@ -76,8 +93,16 @@ globals.getPlayers = function(player, text) {
 	}
 }
 
+globals.assert = function(dataType, message) { // || @ if the first parameter is equal to false or nil then it will error with a message
+	if (!dataType) {
+		error(message);
+	}
+}
+
+// || @ setting __loaded boolean to true
 globals.__loaded = true;
 
+// || @ checking if verbose is enabled then printing
 if (configuration.verbose) {
 	print 'XornisGlobals loaded!';
 }
