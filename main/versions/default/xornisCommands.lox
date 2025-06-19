@@ -60,7 +60,7 @@ var customCommands = xornis.customCommands;
 
 // || @ commands (i am too lazy to comment all of these so you figure them out lmao)
 commands.quit = {
-	prefix = '!',
+	prefix = nil,
 	args = {},
 	description = 'Quits to menu',
 	adminLevel = 0,
@@ -72,7 +72,7 @@ commands.quit = {
 }
 
 commands.invite = {
-	prefix = '!',
+	prefix = nil,
 	args = {},
 	description = 'Sends the GG invite (13+)',
 	adminLevel = 0,
@@ -88,7 +88,7 @@ commands.invite = {
 }
 
 commands.kick = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player', 'reason'},
 	description = `Kicks player(s)`,
 	adminLevel = 1,
@@ -103,7 +103,7 @@ commands.kick = {
 }
 
 commands.god = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player'},
 	description = `Gods player(s)`,
 	adminLevel = 2,
@@ -118,7 +118,7 @@ commands.god = {
 }
 
 commands.ungod = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player'},
 	description = `Ungods player(s)`,
 	adminLevel = 2,
@@ -133,7 +133,7 @@ commands.ungod = {
 }
 
 commands.noclip = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player'},
 	description = `Noclips player(s)`,
 	adminLevel = 2,
@@ -148,7 +148,7 @@ commands.noclip = {
 }
 
 commands.clip = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player'},
 	description = `Un-noclips player(s)`,
 	adminLevel = 2,
@@ -163,7 +163,7 @@ commands.clip = {
 }
 
 commands.maxhealth = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player', 'hp'},
 	description = `Sets player(s) max health`,
 	adminLevel = 2,
@@ -178,7 +178,7 @@ commands.maxhealth = {
 }
 
 commands.health = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player', 'hp'},
 	description = `Sets player(s) health`,
 	adminLevel = 2,
@@ -193,7 +193,7 @@ commands.health = {
 }
 
 commands.heal = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player'},
 	description = `Heal player(s)`,
 	adminLevel = 2,
@@ -208,7 +208,7 @@ commands.heal = {
 }
 
 commands.damage = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player', 'hp'},
 	description = `Damage player(s)`,
 	adminLevel = 2,
@@ -223,7 +223,7 @@ commands.damage = {
 }
 
 commands.armor = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player', 'armor', 'max'},
 	description = `Set player(s) armor`,
 	adminLevel = 2,
@@ -247,7 +247,7 @@ commands.armor = {
 }
 
 commands.immunity = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player', 'immunity'},
 	description = `Set player(s) immunity`,
 	adminLevel = 2,
@@ -262,7 +262,7 @@ commands.immunity = {
 }
 
 commands.speed = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player', 'speed'},
 	description = `Set player(s) speed`,
 	adminLevel = 2,
@@ -277,7 +277,7 @@ commands.speed = {
 }
 
 commands.jumpforce = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player', 'jumpforce'},
 	description = `Set player(s) jump force`,
 	adminLevel = 2,
@@ -307,7 +307,7 @@ commands.infection = {
 }
 
 commands.kill = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player'},
 	description = `Kills player(s)`,
 	adminLevel = 2,
@@ -322,7 +322,7 @@ commands.kill = {
 }
 
 commands.explode = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player'},
 	description = 'We do a little bit of trolling',
 	adminLevel = 2,
@@ -337,7 +337,7 @@ commands.explode = {
 }
 
 commands.refresh = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player'},
 	description = `Refresh player(s)`,
 	adminLevel = 1,
@@ -352,7 +352,7 @@ commands.refresh = {
 }
 
 commands.re = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player'},
 	description = `Refresh player(s)`,
 	adminLevel = 1,
@@ -368,7 +368,7 @@ commands.re = {
 }
 
 commands.respawn = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player'},
 	description = `Respawn player(s)`,
 	adminLevel = 1,
@@ -383,7 +383,7 @@ commands.respawn = {
 }
 
 commands.res = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player'},
 	description = `Respawn player(s)`,
 	adminLevel = 1,
@@ -399,7 +399,7 @@ commands.res = {
 }
 
 commands.overwatch = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player'},
 	description = `Set player(s) to overwatch`,
 	adminLevel = 1,
@@ -414,7 +414,7 @@ commands.overwatch = {
 }
 
 commands.unoverwatch = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player'},
 	description = `Un-set player(s) to overwatch`,
 	adminLevel = 1,
@@ -429,7 +429,7 @@ commands.unoverwatch = {
 }
 
 commands.bypass = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player'},
 	description = `Give player(s) bypass`,
 	adminLevel = 2,
@@ -444,7 +444,7 @@ commands.bypass = {
 }
 
 commands.unbypass = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player'},
 	description = `Remove player(s) bypass`,
 	adminLevel = 2,
@@ -459,7 +459,7 @@ commands.unbypass = {
 }
 
 commands.mute = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player'},
 	description = `Mute player(s)`,
 	adminLevel = 1,
@@ -474,7 +474,7 @@ commands.mute = {
 }
 
 commands.unmute = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player'},
 	description = `Unmute player(s)`,
 	adminLevel = 1,
@@ -489,7 +489,7 @@ commands.unmute = {
 }
 
 commands.invisible = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player'},
 	description = `Sets player(s) invisible`,
 	adminLevel = 1,
@@ -504,7 +504,7 @@ commands.invisible = {
 }
 
 commands.invis = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player'},
 	description = `Sets player(s) invisible`,
 	adminLevel = 1,
@@ -520,7 +520,7 @@ commands.invis = {
 }
 
 commands.visible = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player'},
 	description = `Sets player(s) visible`,
 	adminLevel = 1,
@@ -535,7 +535,7 @@ commands.visible = {
 }
 
 commands.vis = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player'},
 	description = `Sets player(s) visible`,
 	adminLevel = 1,
@@ -551,7 +551,7 @@ commands.vis = {
 }
 
 commands.teleport = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player1', 'player2'},
 	description = `Teleport player(s) to other player(s)`,
 	adminLevel = 1,
@@ -569,7 +569,7 @@ commands.teleport = {
 }
 
 commands.goto = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player'},
 	description = `Goto a player`,
 	adminLevel = 1,
@@ -585,7 +585,7 @@ commands.goto = {
 }
 
 commands.bring = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player'},
 	description = `Bring player(s)`,
 	adminLevel = 1,
@@ -600,7 +600,7 @@ commands.bring = {
 }
 
 commands.shirt = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player', 'id'},
 	description = `Set player(s) shirt`,
 	adminLevel = 2,
@@ -615,7 +615,7 @@ commands.shirt = {
 }
 
 commands.pants = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player', 'id'},
 	description = `Set player(s) pants`,
 	adminLevel = 2,
@@ -630,7 +630,7 @@ commands.pants = {
 }
 
 commands.csay = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player', 'message'},
 	description = 'Sends a chat message to player(s)',
 	adminLevel = 2,
@@ -645,7 +645,7 @@ commands.csay = {
 }
 
 commands.asay = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player', 'message'},
 	description = 'Sends an announcement to player(s)',
 	adminLevel = 1,
@@ -660,7 +660,7 @@ commands.asay = {
 }
 
 commands.giveitem = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player', 'item'},
 	description = 'Give player(s) item(s)',
 	adminLevel = 2,
@@ -679,7 +679,7 @@ commands.giveitem = {
 }
 
 commands.removeitem = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player', 'item'},
 	description = 'Remove player(s) item(s)',
 	adminLevel = 2,
@@ -700,7 +700,7 @@ commands.removeitem = {
 }
 
 commands.forceclass = {
-	prefix = '!',
+	prefix = nil,
 	args = {'player', 'class'},
 	description = 'Forceclass player(s)',
 	adminLevel = 1,
@@ -715,7 +715,7 @@ commands.forceclass = {
 }
 
 commands.help = {
-	prefix = '!',
+	prefix = nil,
 	args = {'command'},
 	description = 'Shows a list of commands',
 	adminLevel = 0,
