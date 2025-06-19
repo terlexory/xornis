@@ -55,7 +55,7 @@ xornis.processMessageCommand = function(player, mesg) {
 		
 		// || @ another set of checks		
 		if (!cmdTable) { return }
-		if (cmdTable.prefix != prefix) { return }	
+		if (cmdTable.prefix != prefix and cmdTable.prefix) { return } elseif (prefix != configuration.defaultPrefix) { return }
 		
 		// || @ checking if the player is authorized to run this command by the rank	
 		var adminLevel = cmdTable.adminLevel;
