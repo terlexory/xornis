@@ -1,13 +1,17 @@
 // xorniscommands.lox | made by terlexory
 
+// || @ yielding until table has been created
 while (!_G.xornis) {
 	wait();
 }
 
+// || @ xornis var
 var xornis = _G.xornis;
 
+// || @ creating table element
 xornis.commands = {}
 
+// || @ yielding until table elements have been created
 while (!xornis.globals) {
 	wait();
 }
@@ -20,6 +24,7 @@ while (!xornis.customCommands) {
 	wait();
 }
 
+// || @ vars
 var globals = xornis.globals;
 var commands = xornis.commands;
 var configuration = xornis.configuration;
@@ -53,6 +58,7 @@ var customCommands = xornis.customCommands;
 	//}
 //}
 
+// || @ commands (i am too lazy to comment all of these so you figure them out lmao)
 commands.quit = {
 	prefix = '!',
 	args = {},
