@@ -1,10 +1,13 @@
-// xornismain.lox | made by terlexory
+// @ xornismain.lox | made by terlexory
 
+// || @ defining global
 _G.xornis = {}
 
+// || @ xornis var
 var xornis = _G.xornis;
-xornis.version = 4;
+xornis.version = 5;
 
+// || @ yielding until table elements created
 while (!xornis.globals) {
 	wait();
 }
@@ -21,76 +24,95 @@ while (!xornis.configuration) {
 	wait();
 }
 
+// || @ vars
 var globals = xornis.globals;
 var commands = xornis.commands;
 var customCommands = xornis.customCommands;
 var configuration = xornis.configuration;
 
-xornis.processMessageCommand = function(player, msg) {
-	if (!msg) { return }
-	if (!player) { return }
-	
-	if (typeof(msg) != 'string') { return }
-	if (typeof(player) != 'Instance') { return }
-	
-	var prefix = sub(msg, 1,1);
-	
-	msg = gsub(msg, prefix, '');
-	
-	var cmd = lower(strsplit(msg, ' ')[1]);
-	var cmdTable = commands[cmd] or customCommands[cmd];
-	
-	msg = gsub(msg, cmd, '');
-	msg = sub(msg, 2);
+// || @ main function
+xornis.processMessageCommand = function(player, mesg) {
+	// || @ splitting commands with ;
+	for _,msg in strsplit(mesg, ' | ') {
+		// || @ some checks
+		if (!msg) { return }
+		if (!player) { return }
 		
-	if (!cmdTable) { return }
-	if (cmdTable.prefix != prefix) { return }	
-	
-	var adminLevel = cmdTable.adminLevel;
-	
-	if (!globals.isRankOrAbove(player, adminLevel)) {
-		Announce('Insufficent permissions, your rank does not fit the requirement to run this command.', player);
-		return;		
-	}
+		if (typeof(msg) != 'string') { return }
+		if (typeof(player) != 'Instance') { return }
 		
-	var splitArgs = strsplit(msg, ' ');
-	var argsCount = #cmdTable.args;
-	var newArgs = {};
-	
-	for (var i = 1; i <= #splitArgs; i = i + 1) {
-		if (splitArgs[1] == '') { break }
+		// || @ getting the prefix
+		var prefix = sub(msg, 1,1);
+		
+		msg = gsub(msg, prefix, '');
+		
+		// || @ getting the command and the table for it	
+		var cmd = lower(strsplit(msg, ' ')[1]);
+		var cmdTable = commands[cmd] or customCommands[cmd];
+		
+		msg = gsub(msg, cmd, '');
+		msg = sub(msg, 2);
+		
+		// || @ another set of checks		
+		if (!cmdTable) { return }
+		if (cmdTable.prefix != prefix) { return }	
+		
+		// || @ checking if the player is authorized to run this command by the rank	
+		var adminLevel = cmdTable.adminLevel;
+		
+		if (!globals.isRankOrAbove(player, adminLevel)) {
+			Announce('Insufficent permissions, your rank does not fit the requirement to run this command.', player);
+			return;		
+		}
 
-		if (i != argsCount) {		
-			newArgs[i] = splitArgs[i];
-		} else {
-			try {
-				newArgs[i] = splitArgs[i] + strsplit(msg, splitArgs[i])[#strsplit(msg, splitArgs[i])];
-			} catch err { 
-			
+		// || @ arguments to a table which the code can read
+		var splitArgs = strsplit(msg, ' ');
+		var argsCount = #cmdTable.args;
+		var newArgs = {};
+
+		for (var i = 1; i <= #splitArgs; i = i + 1) {
+			if (splitArgs[1] == '') { break }
+
+			if (i != argsCount) {		
+				newArgs[i] = splitArgs[i];
+			} else {
+				try {
+					newArgs[i] = splitArgs[i] + strsplit(msg, splitArgs[i])[#strsplit(msg, splitArgs[i])];
+				} catch err { 
+				
+				}
+				break;			
 			}
-			break;			
+		}
+
+		// || @ checking if the player supplied enough arguments	
+		if (#newArgs < argsCount and !cmdTable.argumentsOptional) {
+			var message = `Insufficent arguments\n Usage: {prefix}{cmd}`
+
+			for (var i = 1; i <= argsCount; i = i + 1) {
+				message = message + ` [{cmdTable.args[i]}]`
+			}
+
+			Announce(message, player);
+			Announce(`Description: \n[{cmdTable.description}]`, player);
+			return;
+		}
+
+		// || @ error handling	
+		try {
+			cmdTable.callback(player, newArgs);
+		} catch err {
+			Announce(`Command experienced an error\nError Message: {err}`, player);	
 		}
 	}
-	
-	if (#newArgs < argsCount and !cmdTable.argumentsOptional) {
-		var message = `Insufficent arguments\n Usage: {prefix}{cmd}`
-		
-		for (var i = 1; i <= argsCount; i = i + 1) {
-			message = message + ` [{cmdTable.args[i]}]`
-		}
-		
-		Announce(message, player);
-		Announce(`Description: \n[{cmdTable.description}]`, player);
-		return;
-	}
-	
-	cmdTable.callback(player, newArgs);
 }
 
+// || @ checking if verbose is enabled then printing
 if (configuration.verbose) {
 	print 'XornisMain loaded!';
 }
 
+// || @ yielding until the __loaded boolean on every table element is set to true
 while (!globals.__loaded) {
 	wait();
 }
@@ -107,4 +129,8 @@ while (!configuration.__loaded) {
 	wait();
 }
 
+// || @ setting the __loaded boolean to true
+xornis.__loaded = true;
+
+// || @ printing watermark
 print `This server is using Xornis Admin, Version: {xornis.version}`;
