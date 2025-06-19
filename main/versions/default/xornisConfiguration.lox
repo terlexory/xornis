@@ -10,6 +10,7 @@ var xornis = _G.xornis;
 
 // || @ xornis config
 xornis.configuration = {
+	Prefix = ":" // Prefix for commands replace ":" with anything you want like "!" or ";"
 	inviteCode = '[CODE HERE]',
 	verbose = true
 }
